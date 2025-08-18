@@ -1,0 +1,305 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{geometry}
+\usepackage{float} % To use [H] for figures
+\geometry{margin=1in}
+
+\title{Foundation of Data Engineering}
+\author{}
+\date{}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegray},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=pythonstyle}
+
+\begin{document}
+
+\maketitle
+
+\section*{Functions to Plot}
+
+\section{Activation Functions}
+
+\subsection{Sigmoid Function}
+
+\begin{lstlisting}[language=Python, caption={Sigmoid function and its derivative}]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def sigmoid_derivative(x):
+    s = sigmoid(x)
+    return s * (1 - s)
+
+x = np.linspace(-10, 10, 1000)
+y_sigmoid = sigmoid(x)
+y_derivative = sigmoid_derivative(x)
+
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.plot(x, y_sigmoid, label="Sigmoid", color='green')
+plt.title("Sigmoid Function")
+plt.xlabel("x")
+plt.ylabel("sigma(x)")
+plt.grid(True)
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(x, y_derivative, label="Sigmoid Derivative", color='orange')
+plt.title("Derivative of Sigmoid")
+plt.xlabel("x")
+plt.ylabel("d(sigma)/dx")
+plt.grid(True)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\noindent\textbf{Output:}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{sigmoid.png}
+    \caption{Sigmoid function and its derivative}
+\end{figure}
+
+\subsection{ReLU Function}
+
+\begin{lstlisting}[language=Python, caption={ReLU function and its derivative}]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def relu(x):
+    return np.maximum(0, x)
+
+def relu_derivative(x):
+    return np.where(x > 0, 1, 0)
+
+x = np.linspace(-10, 10, 1000)
+y_relu = relu(x)
+y_derivative = relu_derivative(x)
+
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.plot(x, y_relu, label="ReLU", color='blue')
+plt.title("ReLU Function")
+plt.xlabel("x")
+plt.ylabel("ReLU(x)")
+plt.grid(True)
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(x, y_derivative, label="ReLU Derivative", color='red')
+plt.title("Derivative of ReLU")
+plt.xlabel("x")
+plt.ylabel("d(ReLU)/dx")
+plt.grid(True)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\noindent\textbf{Output:}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Relu.png}
+    \caption{ReLU function and its derivative}
+\end{figure}
+
+\subsection{Tanh Function}
+
+\begin{lstlisting}[language=Python, caption={Tanh function and its derivative}]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def tanh(x):
+    return np.tanh(x)
+
+def tanh_derivative(x):
+    return 1 - np.tanh(x)**2
+
+x = np.linspace(-10, 10, 1000)
+y_tanh = tanh(x)
+y_derivative = tanh_derivative(x)
+
+plt.figure(figsize=(10, 5))
+plt.subplot(1, 2, 1)
+plt.plot(x, y_tanh, label="Tanh", color='purple')
+plt.title("Tanh Function")
+plt.xlabel("x")
+plt.ylabel("tanh(x)")
+plt.grid(True)
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(x, y_derivative, label="Tanh Derivative", color='brown')
+plt.title("Derivative of Tanh")
+plt.xlabel("x")
+plt.ylabel("d(tanh)/dx")
+plt.grid(True)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\noindent\textbf{Output:}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Tanh.png}
+    \caption{Tanh function and its derivative}
+\end{figure}
+
+\section{Basic Functions}
+
+\subsection{$f(x) = e^{-x}$}
+
+\begin{lstlisting}[language=Python, caption={$f(x) = e^{-x}$ and its derivative}]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f(x):
+    return np.exp(-x)
+
+def f_derivative(x):
+    return -np.exp(-x)
+
+x = np.linspace(-5, 5, 500)
+y = f(x)
+y_prime = f_derivative(x)
+
+plt.figure(figsize=(10, 5))
+plt.plot(x, y, label=r'$f(x) = e^{-x}$', color='blue')
+plt.plot(x, y_prime, label=r"$f'(x) = -e^{-x}$", color='red', linestyle='--')
+plt.title("Function and Derivative: $f(x) = e^{-x}$")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\noindent\textbf{Output:}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Fig1.png}
+    \caption{$f(x) = e^{-x}$ function and its derivative}
+\end{figure}
+
+\subsection{$f(x) = e^{-|x|}$}
+
+\begin{lstlisting}[language=Python, caption={$f(x) = e^{-|x|}$ and its derivative}]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f(x):
+    return np.exp(-np.abs(x))
+
+def f_derivative(x):
+    return np.where(x > 0, -np.exp(-x), np.where(x < 0, np.exp(x), 0))
+
+x = np.linspace(-5, 5, 1000)
+y = f(x)
+y_prime = f_derivative(x)
+
+plt.figure(figsize=(10, 5))
+plt.plot(x, y, label=r'$f(x) = e^{-|x|}$', color='blue')
+plt.plot(x, y_prime, label=r"$f'(x)$", color='orange', linestyle='--')
+plt.title("Function and Derivative: $f(x) = e^{-|x|}$")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.grid(True)
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\noindent\textbf{Output:}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Fig2.png}
+    \caption{$f(x) = e^{-|x|}$ function and its derivative}
+\end{figure}
+
+\subsection{$f(x) = e^{-x^2}$}
+
+\begin{lstlisting}[language=Python, caption={$f(x) = e^{-x^2}$ and its derivative}]
+import numpy as np
+import matplotlib.pyplot as plt
+
+def f(x):
+    return np.exp(-x**2)
+
+def f_derivative(x):
+    return -2 * x * np.exp(-x**2)
+
+x = np.linspace(-3, 3, 500)
+y = f(x)
+y_prime = f_derivative(x)
+
+plt.figure(figsize=(10, 5))
+plt.plot(x, y, label=r'$f(x) = e^{-x^2}$', color='blue')
+plt.plot(x, y_prime, label=r"$f'(x) = -2x e^{-x^2}$", color='red', linestyle='--')
+plt.title("Function and Derivative: $f(x) = e^{-x^2}$")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.grid(True)
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.legend()
+plt.tight_layout()
+plt.show()
+\end{lstlisting}
+
+\noindent\textbf{Output:}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Fig3.png}
+    \caption{$f(x) = e^{-x^2}$ function and its derivative}
+\end{figure}
+
+\vspace{2em}
+\hrule
+\vspace{1em}
+
+\begin{center}
+\textbf{Submitted By} \\
+\vspace{0.5em}
+Name: \textbf{Sarvesh Adithya J} \\
+Registration Number: \textbf{2512004}
+\end{center}
+
+\end{document}
